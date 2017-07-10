@@ -1,0 +1,8 @@
+build/
+# Gradle files
+.gradle/
+.idea/
+obj/
+
+*.iml
+*.log

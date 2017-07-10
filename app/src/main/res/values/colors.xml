@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="bottom_bar_normal">#7b7c7c</color>
+    <color name="bottom_bar_selected">#1ab891</color>
+    <color name="background">#e7eeeeef</color>
+    <color name="colorPrimaryReplace">#673AB7</color>
+    <color name="white">#ffffff</color>
+    <color name="studio_color">#0099cc</color>
+    <color name="colorSocketOpen">#66A6DF</color>
+    <color name="colorSocketClose">#000001</color>
+    <color name="dark">#2b2b2b</color>
+    <color name="light_dark">#802b2b2b</color>
+    <color name="socket_background">#2b8ad4</color>
+    <color name="black">#f5000000</color>
+    <color name="welcome_base">#4ab080</color>
+    <color name="welcome_text">#fbfbfc</color>
+    <color name="welcome_copyright">#9efbfbfc</color>
+    <color name="line_color">#e7e7e7e9</color>
+
+    <color name="colorBlack">#000000</color>
+    <color name="colorGre">#c5534242</color>
+    <color name="open_lock_background">#fdfdfe</color>
+
+    <!-- IMSdroid Colors -->
+    <color name="color_black">#000000</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_violet">#9900FF</color>
+    <color name="color_gray">#736F6E</color>
+    <color name="color_dark">#161C27</color>
+    <color name="color_light">#4D6288</color>
+
+    <color name="bg_capture_progress">#00000000</color>
+    <color name="vine_green">#ff4BB182</color>
+</resources>
