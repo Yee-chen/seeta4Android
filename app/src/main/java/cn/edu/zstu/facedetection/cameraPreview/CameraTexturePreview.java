@@ -56,13 +56,11 @@ public class CameraTexturePreview extends TextureView implements TextureView.Sur
         mSurfaceTextureAvailable = true;
         if (mCamHasOpened) {
             startPreview(surface);
-        } else {
-            mSurfaceTexture = null;
-            mSurfaceTexture = surface;
         }
-
+        mSurfaceTexture = surface;
         mSurfaceHeight = height;
         mSurfaceWidth = width;
+        mScaleMatrix.setScale(width / (float) CameraWrapper.IMAGE_WIDTH, height / (float) CameraWrapper.IMAGE_HEIGHT);
     }
 
     @Override
@@ -73,7 +71,6 @@ public class CameraTexturePreview extends TextureView implements TextureView.Sur
 
         mSurfaceHeight = height;
         mSurfaceWidth = width;
-
         mScaleMatrix.setScale(width / (float) CameraWrapper.IMAGE_WIDTH, height / (float) CameraWrapper.IMAGE_HEIGHT);
     }
 
@@ -103,6 +100,8 @@ public class CameraTexturePreview extends TextureView implements TextureView.Sur
             mCamHasOpened = true;
             if (mSurfaceTextureAvailable && (mSurfaceTexture != null)) {
                 startPreview(mSurfaceTexture);
+                mScaleMatrix.setScale(mSurfaceWidth / (float) CameraWrapper.IMAGE_WIDTH,
+                        mSurfaceHeight / (float) CameraWrapper.IMAGE_HEIGHT);
             }
         }
     };

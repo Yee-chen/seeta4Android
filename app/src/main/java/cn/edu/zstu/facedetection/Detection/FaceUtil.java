@@ -33,7 +33,7 @@ public class FaceUtil {
 	 * @param canvas 给定的画布
 	 * @param face 需要绘制的人脸信息
 	 */
-	static public void drawRect(Canvas canvas, FaceRect face) {
+	static public void drawRect(Canvas canvas, Rect face) {
 
 		if(canvas == null) {
 			return;
@@ -43,7 +43,8 @@ public class FaceUtil {
 		paint.setStyle(Style.STROKE);
 		paint.setColor(Color.rgb(255, 203, 15));
 		paint.setStrokeWidth(2);
-		canvas.drawOval(new RectF(face.bound.left, face.bound.top, face.bound.right, face.bound.bottom), paint);
+//		canvas.drawOval(new RectF(face.bound.left, face.bound.top, face.bound.right, face.bound.bottom), paint);
+		canvas.drawRect(new RectF(face.left, face.top, face.right, face.bottom), paint);
 	}
 
 	/**

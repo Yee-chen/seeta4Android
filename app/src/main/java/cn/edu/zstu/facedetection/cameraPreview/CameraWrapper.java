@@ -22,6 +22,7 @@ package cn.edu.zstu.facedetection.cameraPreview;
 
 import android.annotation.SuppressLint;
 import android.graphics.ImageFormat;
+import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.util.Log;
@@ -30,14 +31,15 @@ import android.view.SurfaceHolder;
 import java.io.IOException;
 import java.util.List;
 
-import cn.edu.zstu.facedetection.util.UIThreadInterface;
+import cn.edu.zstu.facedetection.Detection.FaceDetector;
+import cn.edu.zstu.facedetection.util.MyApplication;
 
 @SuppressLint("NewApi")
 public class CameraWrapper {
     private static final String TAG = "CameraWrapper";
 
-    public static final int IMAGE_HEIGHT = 480;
-    public static final int IMAGE_WIDTH = 640;
+    public static int IMAGE_HEIGHT = 480;
+    public static int IMAGE_WIDTH = 640;
     private static final boolean DEBUG = true;
     private static CameraWrapper mCameraWrapper;
 
@@ -47,17 +49,9 @@ public class CameraWrapper {
     private boolean mIsPreviewing = false;
     private float mPreviewRate = -1.0f;
     private CameraPreviewCallback mCameraPreviewCallback;
-    private byte[] mImageCallbackBuffer = new byte[CameraWrapper.IMAGE_WIDTH
-            * CameraWrapper.IMAGE_HEIGHT * 3 / 2];
     private int openCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
 
-    private UIThreadInterface mUIThreadInterface;
-    private long mTime;
     private CameraWrapper() {
-    }
-
-    public void setUIThreadInterface(UIThreadInterface obj) {
-        mUIThreadInterface = obj;
     }
 
     public static CameraWrapper getInstance() {
@@ -150,9 +144,17 @@ public class CameraWrapper {
             this.mCameraParamters.setFlashMode("off");
             this.mCameraParamters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
             this.mCameraParamters.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
+            Point p = MyApplication.getBestCameraResolution(this.mCameraParamters, MyApplication.getScreenMetrics());
+            IMAGE_WIDTH = p.x;
+            IMAGE_HEIGHT = p.y;
             this.mCameraParamters.setPreviewSize(IMAGE_WIDTH, IMAGE_HEIGHT);
             mCameraPreviewCallback = new CameraPreviewCallback();
-            mCamera.addCallbackBuffer(mImageCallbackBuffer);
+            byte[] a = new byte[IMAGE_WIDTH * IMAGE_HEIGHT * 3 / 2];
+            byte[] b = new byte[IMAGE_WIDTH * IMAGE_HEIGHT * 3 / 2];
+            byte[] c = new byte[IMAGE_WIDTH * IMAGE_HEIGHT * 3 / 2];
+            mCamera.addCallbackBuffer(a);
+            mCamera.addCallbackBuffer(b);
+            mCamera.addCallbackBuffer(c);
             mCamera.setPreviewCallbackWithBuffer(mCameraPreviewCallback);
             List<String> focusModes = this.mCameraParamters.getSupportedFocusModes();
             if (focusModes.contains("continuous-video")) {
@@ -181,10 +183,7 @@ public class CameraWrapper {
 
         @Override
         public void onPreviewFrame(byte[] data, Camera camera) {
-            if (System.currentTimeMillis() - mTime > 500) {
-                mTime = System.currentTimeMillis();
-                mUIThreadInterface.onFrame(data);
-            }
+            FaceDetector.getInstance().onFrameData(data);
             camera.addCallbackBuffer(data);
         }
     }
